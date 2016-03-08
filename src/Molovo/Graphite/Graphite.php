@@ -350,6 +350,30 @@ class Graphite
     }
 
     /**
+     * Set the color to white.
+     *
+     * @param string $str An optional string to output
+     *
+     * @return self
+     */
+    public function white($str = null)
+    {
+        return $this->setColor(self::WHITE, $str);
+    }
+
+    /**
+     * Set the background color to white.
+     *
+     * @param string $str An optional string to output
+     *
+     * @return self
+     */
+    public function whitebg($str = null)
+    {
+        return $this->setBackgroundColor(self::WHITE, $str);
+    }
+
+    /**
      * Set the color to gray.
      *
      * @param string $str An optional string to output
