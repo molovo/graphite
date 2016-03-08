@@ -1,0 +1,17 @@
+{
+    "name": "molovo/graphite",
+    "description": "A collection of helpers for pretty command-line tools.",
+    "keywords": ["graphite", "ANSI", "CLI"],
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "James Dinsdale",
+        "email": "hi@molovo.co"
+      }
+    ],
+    "autoload": {
+      "psr-4": {
+        "Molovo\\Graphite\\": "src/Molovo/Graphite"
+      }
+    }
+}
