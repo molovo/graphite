@@ -110,6 +110,13 @@ class Box
     private $title = null;
 
     /**
+     * A graphite object for styling strings.
+     *
+     * @var Graphite|null
+     */
+    private $graphite = null;
+
+    /**
      * Create the box object.
      *
      * @param string|array $content The content to render
@@ -117,14 +124,14 @@ class Box
      */
     public function __construct($content, array $styles = [])
     {
+        // Create a new Graphite object to allow styling
+        $this->graphite = new Graphite;
+
         // Prepare the content for rendering
         $this->prepareContent($content);
 
         // Merge the passed styles with the defaults
         $this->styles = array_merge($this->styles, $styles);
-
-        // Create a new Graphite object to allow styling
-        $this->graphite = new Graphite;
     }
 
     /**
@@ -180,14 +187,16 @@ class Box
         // of the longest line
         $this->width = 0;
         foreach ($content as $line) {
-            if (strlen($line) > $this->width) {
-                $this->width = strlen($line);
+            $len = mb_strlen($this->graphite->strip($line), 'UTF-8');
+            if ($len > $this->width) {
+                $this->width = $len;
             }
         }
 
         // Pad each line of the content to the box's width
-        foreach ($content as &$line) {
-            $line = str_pad($line, $this->width, ' ');
+        foreach ($content as $i => $line) {
+            $len         = mb_strlen($this->graphite->strip($line), 'UTF-8');
+            $content[$i] = $line.$this->graphite->repeat(' ', ($this->width - $len));
         }
 
         // Store the array of lines
@@ -218,8 +227,8 @@ class Box
         $pad = $this->graphite->repeat(' ', $this->styles['paddingX']);
 
         // Append and prepend the padding to each line of content
-        foreach ($content as &$line) {
-            $line = $pad.$line.$pad;
+        foreach ($content as $i => $line) {
+            $content[$i] = $pad.$line.$pad;
         }
 
         return $content;
@@ -242,8 +251,8 @@ class Box
         $side  = $color->encode($this->styles['borderStyle']['vertical']);
 
         // Append and prepend the left/right character to each line of content
-        foreach ($content as &$line) {
-            $line = $side.$line.$side;
+        foreach ($content as $i => $line) {
+            $content[$i] = $side.$line.$side;
         }
 
         // Create the top border
@@ -302,8 +311,8 @@ class Box
         // Add whitespace at either of end of each line
         // to create the horizontal padding
         $pad = $this->graphite->repeat(' ', $this->styles['marginX']);
-        foreach ($content as &$line) {
-            $line = $pad.$line.$pad;
+        foreach ($content as $i => $line) {
+            $content[$i] = $pad.$line.$pad;
         }
 
         return $content;
