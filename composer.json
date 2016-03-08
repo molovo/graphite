@@ -1,6 +1,6 @@
 {
     "name": "molovo/graphite",
-    "description": "A collection of helpers for pretty command-line tools.",
+    "description": "A collection of helpers for building pretty command-line tools.",
     "keywords": ["graphite", "ANSI", "CLI"],
     "license": "MIT",
     "authors": [
