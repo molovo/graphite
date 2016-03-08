@@ -113,7 +113,7 @@ class Table
         // Create the header separator and add it to the output
         if ($this->styles['headerSeparator']) {
             $char         = $this->styles['headerSeparator'];
-            $len          = strlen($this->graphite->strip($header));
+            $len          = mb_strlen($this->graphite->strip($header), 'UTF-8');
             $color        = $this->graphite->setColor($this->styles['separatorColor']);
             $rowSeparator = $this->graphite->repeat($char, $len);
             $rowSeparator = $color->encode($rowSeparator);
@@ -131,7 +131,7 @@ class Table
             }
         }
 
-        if (($marginY = $this->styles['marginX']) > 0) {
+        if (($marginY = $this->styles['marginY']) > 0) {
             $i = 0;
             while ($i++ < $marginY) {
                 array_unshift($output, '');
