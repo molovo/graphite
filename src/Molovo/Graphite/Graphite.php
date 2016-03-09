@@ -109,9 +109,10 @@ class Graphite
      */
     public function encode($str)
     {
-        $out         = $this->start().$str.$this->end();
-        $this->color = null;
-        $this->style = null;
+        $out                   = $this->start().$str.$this->end();
+        $this->color           = null;
+        $this->backgroundColor = null;
+        $this->style           = null;
 
         return $out;
     }
